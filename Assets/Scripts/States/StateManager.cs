@@ -13,8 +13,8 @@ public class StateManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        previousState = new MainMenuState();
-        activeState = new MainMenuState();
+        previousState = GetComponent<MainMenuState>();
+        activeState = GetComponent<MainMenuState>();
     }
 
     // Update is called once per frame
@@ -32,6 +32,18 @@ public class StateManager : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if (hasChangedState)
+        {
+            hasChangedState = false;
+            previousState.enabled = false;
+            activeState.enabled = true;
+        }
+    }
 
+    public void ChangeState(GameState newState)
+    {
+        previousState = activeState;
+        activeState = newState;
+        hasChangedState = true;
     }
 }
