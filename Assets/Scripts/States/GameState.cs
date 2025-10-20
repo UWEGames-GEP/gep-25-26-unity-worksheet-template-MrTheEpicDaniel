@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class GameState : MonoBehaviour
+public class GameState 
 {
-    private void OnEnable()
+    public void onEnter()
     {
         Debug.Log("GameState.OnEnable Called!");
     }
-    private void OnDisable()
+    public void onExit()
     {
         Debug.Log("GameState.OnDisable Called!");
     }

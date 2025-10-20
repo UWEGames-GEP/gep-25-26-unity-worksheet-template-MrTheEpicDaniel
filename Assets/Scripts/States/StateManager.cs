@@ -1,11 +1,14 @@
+using NUnit.Framework;
 using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
 
-    GameState activeState;
-    GameState previousState;
+    public GameState activeState;
+    public GameState previousState;
+
+    GameState[] game_states = { new MainMenuState(), new InventoryMenuState(), new PauseMenuState(), new SettingsMenuState(), new ActiveGameplayState() };
 
     bool hasChangedState;
 
@@ -13,21 +16,13 @@ public class StateManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        previousState = GetComponent<MainMenuState>();
-        activeState = GetComponent<MainMenuState>();
+        activeState = game_states[0];
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            GetComponent<GameState>().enabled = true;
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            GetComponent<GameState>().enabled = false;
-        }
+        
 
     }
     private void LateUpdate()
@@ -35,15 +30,14 @@ public class StateManager : MonoBehaviour
         if (hasChangedState)
         {
             hasChangedState = false;
-            previousState.enabled = false;
-            activeState.enabled = true;
         }
     }
 
-    public void ChangeState(GameState newState)
+    public void ChangeState(int new_state)
     {
         previousState = activeState;
-        activeState = newState;
-        hasChangedState = true;
+        activeState = game_states[new_state];
+        previousState.onExit();
+        activeState.onEnter();
     }
 }
