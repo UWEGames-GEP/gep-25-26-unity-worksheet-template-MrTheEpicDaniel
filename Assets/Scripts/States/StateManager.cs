@@ -16,13 +16,15 @@ public class StateManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         activeState = game_states[0];
+        activeState.OnEnter();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        activeState.Update();
 
     }
     private void LateUpdate()
@@ -37,7 +39,7 @@ public class StateManager : MonoBehaviour
     {
         previousState = activeState;
         activeState = game_states[new_state];
-        previousState.onExit();
-        activeState.onEnter();
+        previousState.OnExit();
+        activeState.OnEnter();
     }
 }
