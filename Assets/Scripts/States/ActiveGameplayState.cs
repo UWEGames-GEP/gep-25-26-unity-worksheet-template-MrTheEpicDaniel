@@ -1,7 +1,29 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ActiveGameplayState : GameState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+    public override void OnEnter()
+    {
+        stateManager = GameObject.FindAnyObjectByType<StateManager>();
+        Time.timeScale = 1.0f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        SceneManager.LoadScene(sceneName: "Gameplay");
+        Debug.Log("ActiveGameplayState.OnEnable Called!");
+
+    }
+    public override void OnExit()
+    {
+        Debug.Log("ActiveGameplayState.OnDisable Called!");
+    }
+    public override void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape key pressed!");
+            stateManager.ChangeState(2);
+        }
+    }
+
 }

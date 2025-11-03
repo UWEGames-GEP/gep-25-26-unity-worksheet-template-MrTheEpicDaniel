@@ -5,12 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameState 
 {
+    public StateManager stateManager;
     public virtual void OnEnter()
     {
-        Time.timeScale = 1.0f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        SceneManager.LoadScene(sceneName: "Gameplay");
         Debug.Log("GameState.OnEnable Called!");
     }
     public virtual void OnExit()

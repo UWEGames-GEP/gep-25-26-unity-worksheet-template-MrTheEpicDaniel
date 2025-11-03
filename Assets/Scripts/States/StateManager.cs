@@ -42,4 +42,10 @@ public class StateManager : MonoBehaviour
         previousState.OnExit();
         activeState.OnEnter();
     }
+
+    public int GetPreviousStateIndex()
+    {
+        Debug.Log(System.Array.IndexOf(game_states, previousState));
+        return System.Array.IndexOf(game_states, previousState);
+    }
 }
