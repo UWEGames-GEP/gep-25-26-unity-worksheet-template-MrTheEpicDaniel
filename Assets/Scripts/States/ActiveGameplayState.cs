@@ -9,7 +9,10 @@ public class ActiveGameplayState : GameState
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        SceneManager.LoadScene(sceneName: "Gameplay");
+        if (SceneManager.GetActiveScene().name != "Gameplay")
+        {
+            SceneManager.LoadScene(sceneName: "Gameplay");
+        }
         Debug.Log("ActiveGameplayState.OnEnable Called!");
 
     }
@@ -19,7 +22,7 @@ public class ActiveGameplayState : GameState
     }
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             Debug.Log("Escape key pressed!");
             stateManager.ChangeState(2);

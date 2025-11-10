@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class StateManager : MonoBehaviour
     public GameState activeState;
     public GameState previousState;
 
-    GameState[] game_states = { new MainMenuState(), new InventoryMenuState(), new PauseMenuState(), new SettingsMenuState(), new ActiveGameplayState() };
+    List<GameState> game_states = new List<GameState>();
 
     bool hasChangedState;
 
@@ -16,7 +17,9 @@ public class StateManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameState[] temp_States = { new MainMenuState(), new InventoryMenuState(), new PauseMenuState(), new SettingsMenuState(), new ActiveGameplayState() };
         DontDestroyOnLoad(gameObject);
+        game_states.AddRange(temp_States);
         activeState = game_states[0];
         activeState.OnEnter();
     }
@@ -45,7 +48,8 @@ public class StateManager : MonoBehaviour
 
     public int GetPreviousStateIndex()
     {
-        Debug.Log(System.Array.IndexOf(game_states, previousState));
-        return System.Array.IndexOf(game_states, previousState);
+        return game_states.IndexOf(previousState);
     }
+
+    public int GetActiveStateIndex() { return game_states.IndexOf(activeState); }
 }

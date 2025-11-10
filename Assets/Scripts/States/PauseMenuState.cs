@@ -21,7 +21,7 @@ public class PauseMenuState : MenuState
     }
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             stateManager.ChangeState(stateManager.GetPreviousStateIndex());
         }
