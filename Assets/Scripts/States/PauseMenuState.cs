@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseMenuState : MenuState
 {
@@ -12,7 +13,6 @@ public class PauseMenuState : MenuState
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Debug.Log("PauseMenuState.OnEnable Called!");
-
     }
     public override void OnExit()
     {

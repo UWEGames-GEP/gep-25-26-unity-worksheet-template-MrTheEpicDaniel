@@ -3,36 +3,39 @@ using System.Collections.Generic;
 public class InventoryScript : MonoBehaviour
 {
     public StateManager stateManager;
-    public GameObject Collectables;
+    public Transform worldItemsTransform;
 
-    public List<string> items = new List<string>();
+    public List<CollectableScript> items = new List<CollectableScript>();
 
-    public void AddItemToInventory(string item_name) { items.Add(item_name); }
-    public void RemoveItemFromInventory(string item_name) { items.Remove(item_name); }
+    public void AddItemToInventory(CollectableScript item) { items.Add(item); }
+    public void RemoveItemFromInventory(CollectableScript item) { items.Remove(item); }
+    public void RemoveItemFromInventory()
+    {
+        if (stateManager.GetActiveStateIndex() == 4) { 
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         stateManager = FindAnyObjectByType<StateManager>();
+
+        Transform worldItemsTransform = GameObject.Find("WorldItems").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (stateManager.GetActiveStateIndex() == 4)
-        {
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                AddItemToInventory("GenericItem");
-            }
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                RemoveItemFromInventory("GenericItem");
-            }
-        }
+
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Collectable collisionItem = hit.gameObject.GetComponent<Collectable>();
+        CollectableScript collisionItem = hit.gameObject.GetComponent<CollectableScript>();
+
+        if (collisionItem != null)
+        {
+            items.Add(collisionItem);
+            collisionItem.gameObject.SetActive(false);
+        }
     }
 }
