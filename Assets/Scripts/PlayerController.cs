@@ -23,3 +23,4 @@ public class PlayerController : ThirdPersonController
             GetComponent<InventoryScript>().RemoveItemFromInventory();
         }
     }
+}
